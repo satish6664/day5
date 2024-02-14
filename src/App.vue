@@ -1,23 +1,33 @@
-<script setup>
-import {ref} from "vue"
-import ChildComp from '@/components/ChildComp.vue'
-import FirstChild from '@/components/FirstChild.vue'
-const username = ref("");
-</script>
-
+<!-- App.vue -->
 <template>
-    <FirstChild myprop="Hello, Good Morning" />
-    <div>
-    <ChildComp
-      @changeUsername="
-        (payload) => {
-          username = payload;
-        }
-      " />
-    <p class="username"> Thank You, {{ username }}</p>
+  <div>
+    <h1>Shopping Cart</h1>
+    <ProductList :products="products" @add-to-cart="addToCart" />
+    <Cart :cart="cart" @remove-from-cart="removeFromCart" />
   </div>
-
 </template>
-<style>
 
-</style>
+<script setup>
+import { ref } from 'vue';
+import ProductList from './components/ProductList.vue';
+import Cart from './components/CartAdd.vue';
+
+const products = ref([
+  { id: 1, name: 'Product 1', price: 10 },
+  { id: 2, name: 'Product 2', price: 20 },
+  { id: 3, name: 'Product 3', price: 30 }
+]);
+
+const cart = ref([]);
+
+const addToCart = (product) => {
+  cart.value.push(product);
+};
+
+const removeFromCart = (productId) => {
+  const index = cart.value.findIndex(item => item.id === productId);
+  if (index !== -1) {
+    cart.value.splice(index, 1);
+  }
+};
+</script>
