@@ -1,26 +1,23 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+import {ref} from "vue"
+import ChildComp from '@/components/ChildComp.vue'
+import FirstChild from '@/components/FirstChild.vue'
+const username = ref("");
 </script>
 
+<template>
+    <FirstChild myprop="Hello, Good Morning" />
+    <div>
+    <ChildComp
+      @changeUsername="
+        (payload) => {
+          username = payload;
+        }
+      " />
+    <p class="username"> Thank You, {{ username }}</p>
+  </div>
+
+</template>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
